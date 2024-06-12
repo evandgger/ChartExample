@@ -144,12 +144,15 @@ namespace Graphics.Forms
                 };
 
                 randomNumberForm.ShowDialog();
+
+                RandomRangeLabel.Text = @$"({RandomStartRange};{RandomEndRange})";
             }
-            
+
             else
             {
                 RandomStartRange = null;
                 RandomEndRange = null;
+                RandomRangeLabel.Text = string.Empty;
             }
         }
 

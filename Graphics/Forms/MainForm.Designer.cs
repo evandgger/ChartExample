@@ -47,6 +47,7 @@
             this.EndRangeInput = new System.Windows.Forms.TextBox();
             this.StartRangeInput = new System.Windows.Forms.TextBox();
             this.VisualizationGroupBox = new System.Windows.Forms.GroupBox();
+            this.RandomRangeLabel = new System.Windows.Forms.Label();
             this.ChartTypeLabel = new System.Windows.Forms.Label();
             this.ChartTypeComboBox = new System.Windows.Forms.ComboBox();
             this.RandomSeriesCheckBox = new System.Windows.Forms.CheckBox();
@@ -181,6 +182,7 @@
             // 
             // VisualizationGroupBox
             // 
+            this.VisualizationGroupBox.Controls.Add(this.RandomRangeLabel);
             this.VisualizationGroupBox.Controls.Add(this.ChartTypeLabel);
             this.VisualizationGroupBox.Controls.Add(this.ChartTypeComboBox);
             this.VisualizationGroupBox.Controls.Add(this.RandomSeriesCheckBox);
@@ -194,6 +196,14 @@
             this.VisualizationGroupBox.TabIndex = 2;
             this.VisualizationGroupBox.TabStop = false;
             this.VisualizationGroupBox.Text = "Visualization";
+            // 
+            // RandomRangeLabel
+            // 
+            this.RandomRangeLabel.AutoSize = true;
+            this.RandomRangeLabel.Location = new System.Drawing.Point(158, 97);
+            this.RandomRangeLabel.Name = "RandomRangeLabel";
+            this.RandomRangeLabel.Size = new System.Drawing.Size(0, 20);
+            this.RandomRangeLabel.TabIndex = 4;
             // 
             // ChartTypeLabel
             // 
@@ -225,9 +235,9 @@
             this.RandomSeriesCheckBox.Location = new System.Drawing.Point(7, 96);
             this.RandomSeriesCheckBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RandomSeriesCheckBox.Name = "RandomSeriesCheckBox";
-            this.RandomSeriesCheckBox.Size = new System.Drawing.Size(145, 24);
+            this.RandomSeriesCheckBox.Size = new System.Drawing.Size(87, 24);
             this.RandomSeriesCheckBox.TabIndex = 2;
-            this.RandomSeriesCheckBox.Text = "Random function";
+            this.RandomSeriesCheckBox.Text = "Random";
             this.RandomSeriesCheckBox.UseVisualStyleBackColor = true;
             this.RandomSeriesCheckBox.CheckedChanged += new System.EventHandler(this.RandomSeriesCheckBox_CheckedChanged);
             // 
@@ -436,5 +446,6 @@
         private ComboBox AxisComboBox;
         private Label AxisLabel;
         private TextBox CoefficientInput;
+        private Label RandomRangeLabel;
     }
 }

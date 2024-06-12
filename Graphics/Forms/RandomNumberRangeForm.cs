@@ -1,4 +1,5 @@
 ﻿using Graphics.Helpers;
+using System.Globalization;
 
 namespace Graphics.Forms
 {
@@ -25,6 +26,8 @@ namespace Graphics.Forms
 
             if (inputsAreValid)
             {
+                VerifyRange(ref startRange, ref endRange);
+
                 StartRange = startRange;
                 EndRange = endRange;
 
@@ -33,6 +36,19 @@ namespace Graphics.Forms
             else
             {
                 MessageBox.Show(@"Inputs are not valid. Please verify");
+            }
+        }
+
+        private void VerifyRange(ref double start, ref double end)
+        {
+            if (start > end)
+            {
+                (start, end) = (end, start);
+
+                MessageBox.Show(@"Range is reversed");
+
+                StartRandomRangeInput.Text = start.ToString(CultureInfo.InvariantCulture);
+                EndRandomRangeInput.Text = end.ToString(CultureInfo.InvariantCulture);
             }
         }
     }
