@@ -1,4 +1,5 @@
 using System.Globalization;
+using Graphics.Helpers;
 
 namespace Graphics.Forms
 {
@@ -19,9 +20,9 @@ namespace Graphics.Forms
             var endRangeInput = EndRangeInput.Text;
             var stepInput = StepInput.Text;
 
-            var isStartRangeValid = ParseInput(startRangeInput, StartRangeLabel.Text, out var startRange);
-            var isEndRangeValid = ParseInput(endRangeInput, EndRangeLabel.Text, out var endRange);
-            var isStepValid = ParseInput(stepInput, StepLabel.Text, out var step);
+            var isStartRangeValid = InputHelper.ParseInput(startRangeInput, StartRangeLabel.Text, out var startRange);
+            var isEndRangeValid = InputHelper.ParseInput(endRangeInput, EndRangeLabel.Text, out var endRange);
+            var isStepValid = InputHelper.ParseInput(stepInput, StepLabel.Text, out var step);
 
             var isConfigurationValid = isStartRangeValid && isEndRangeValid && isStepValid;
 
@@ -39,6 +40,8 @@ namespace Graphics.Forms
 
         private void DrawSeries(double startRange, double endRange, double step)
         {
+            ClearSeries();
+
             var activeSeries = GetActiveSeries(VisualizationGroupBox);
 
             var xPoints = CalculateXPoints(startRange, endRange, step);
@@ -46,8 +49,6 @@ namespace Graphics.Forms
             foreach (var seriesName in activeSeries)
             {
                 var series = ChartBox.Series[seriesName];
-
-                series.Points.Clear();
 
                 var pointBuilder = Configuration.SeriesBuilders[seriesName];
 
@@ -130,33 +131,43 @@ namespace Graphics.Forms
             }
         }
 
-        private static bool ParseInput(string input, string fieldName, out double result)
-        {
-            var isValid = double.TryParse(input, out result);
-
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                MessageBox.Show($@"Field {fieldName} cannot be empty");
-            }
-            else if (!isValid)
-            {
-                MessageBox.Show($@"Field {fieldName} has invalid input");
-            }
-
-            return isValid;
-        }
-
         private void RandomSeriesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (RandomSeriesCheckBox.Checked)
             {
-                // open dialog and collect range details
+                var randomNumberForm = new RandomNumberRangeForm();
+
+                randomNumberForm.FormClosed += (o, args) =>
+                {
+                    RandomStartRange = randomNumberForm.StartRange;
+                    RandomEndRange = randomNumberForm.EndRange;
+                };
+
+                randomNumberForm.ShowDialog();
+
+                RandomRangeLabel.Text = @$"({RandomStartRange};{RandomEndRange})";
             }
-            
+
             else
             {
                 RandomStartRange = null;
                 RandomEndRange = null;
+                RandomRangeLabel.Text = string.Empty;
+            }
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            ClearSeries();
+        }
+
+        private void ClearSeries()
+        {
+            var series = ChartBox.Series;
+
+            foreach (var item in series)
+            {
+                item.Points.Clear();
             }
         }
     }
